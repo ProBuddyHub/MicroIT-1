@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Calculator with Real-Time Result</title>
+  <style>
+    /* Base styles */
+    body {
+      font-family: 'Roboto Mono', monospace;
+      background-color: #121212;
+      color: white;
+      margin: 2rem;
+    }
+
+    .calculator-container {
+      max-width: 400px;
+      margin: auto;
+    }
+
+    .calculator {
+      background-color: #1f1f1f;
+      padding: 1rem;
+      border-radius: 10px;
+    }
+
+    /* Main input */
+    input#display {
+      font-size: 1.5rem;
+      height: 3rem;
+      width: 100%;
+      margin-bottom: 0.25rem;
+      padding: 0.25rem 0.5rem;
+      background-color: #2a2a2a;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      user-select: text;
+    }
+    input#display:focus {
+      outline: none;
+      box-shadow: 0 0 5px #777;
+    }
+
+    /* Real-time result line */
+    #realtimeResult {
+      min-height: 1.2rem;
+      font-size: 1rem;
+      color: #adb5bd;
+      user-select: none;
+      text-align: right;
+      margin-bottom: 1rem;
+      font-style: italic;
+      font-weight: 500;
+    }
+
+    /* Buttons grid */
+    .btn-group-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .btn {
+      font-size: 1.2rem;
+      padding: 15px;
+      background-color: #3a3a3a;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.2s ease;
+    }
+
+    .btn:hover {
+      background-color: #575757;
+    }
+
+    /* Light mode styles */
+    body.light-mode {
+      background-color: #f5f5f5;
+      color: black;
+    }
+
+    body.light-mode .calculator {
+      background-color: #fff;
+    }
+
+    body.light-mode input#display {
+      background-color: #eee;
+      color: black;
+    }
+
+    body.light-mode #realtimeResult {
+      color: #6c757d;
+    }
+
+    body.light-mode .btn {
+      background-color: #ddd;
+      color: black;
+    }
+
+    body.light-mode .btn:hover {
+      background-color: #bbb;
+    }
+
+    /* Theme toggle button */
+    #toggleTheme {
+      margin-top: 1rem;
+      padding: 8px 16px;
+      font-size: 1rem;
+      background-color: #007bff;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.3s ease;
+    }
+
+    #toggleTheme:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator-container">
+    <div class="calculator">
+      <input type="text" id="display" placeholder="0" readonly />
+
+      <div id="realtimeResult"></div>
+
+      <div class="btn-group-grid">
+        <button class="btn" onclick="insert('7')">7</button>
+        <button class="btn" onclick="insert('8')">8</button>
+        <button class="btn" onclick="insert('9')">9</button>
+        <button class="btn" onclick="insert('/')">÷</button>
+
+        <button class="btn" onclick="insert('4')">4</button>
+        <button class="btn" onclick="insert('5')">5</button>
+        <button class="btn" onclick="insert('6')">6</button>
+        <button class="btn" onclick="insert('*')">×</button>
+
+        <button class="btn" onclick="insert('1')">1</button>
+        <button class="btn" onclick="insert('2')">2</button>
+        <button class="btn" onclick="insert('3')">3</button>
+        <button class="btn" onclick="insert('-')">−</button>
+
+        <button class="btn" onclick="insert('0')">0</button>
+        <button class="btn" onclick="insert('.')">.</button>
+        <button class="btn" onclick="clearDisplay()">C</button>
+        <button class="btn" onclick="insert('+')">+</button>
+
+        <button class="btn" style="grid-column: span 4;" onclick="calculate()">=</button>
+      </div>
+
+      <button id="toggleTheme">Toggle Light/Dark Mode</button>
+    </div>
+  </div>
+
+  <script>
+    const display = document.getElementById("display");
+    const realtimeResult = document.getElementById("realtimeResult");
+    const toggleTheme = document.getElementById("toggleTheme");
+
+    function insert(value) {
+      display.value += value;
+      updateRealtimeResult();
+    }
+
+    function clearDisplay() {
+      display.value = '';
+      realtimeResult.textContent = '';
+    }
+
+    function backspace() {
+      display.value = display.value.slice(0, -1);
+      updateRealtimeResult();
+    }
+
+    function calculate() {
+      try {
+        display.value = eval(display.value);
+        realtimeResult.textContent = '';
+      } catch (e) {
+        display.value = 'Error';
+        realtimeResult.textContent = '';
+      }
+    }
+
+    function updateRealtimeResult() {
+      if (display.value.trim() === '') {
+        realtimeResult.textContent = '';
+        return;
+      }
+      try {
+        let result = eval(display.value);
+        if (result !== undefined && result !== null) {
+          realtimeResult.textContent = `= ${result}`;
+        } else {
+          realtimeResult.textContent = '';
+        }
+      } catch {
+        realtimeResult.textContent = '';
+      }
+    }
+
+    // Keyboard support
+    document.addEventListener("keydown", (event) => {
+      const key = event.key;
+
+      if (!isNaN(key) || "+-*/().".includes(key)) {
+        insert(key);
+        event.preventDefault();
+      } else if (key === "Enter") {
+        calculate();
+        event.preventDefault();
+      } else if (key === "Backspace") {
+        backspace();
+        event.preventDefault();
+      } else if (key === "Escape") {
+        clearDisplay();
+        event.preventDefault();
+      }
+    });
+
+    // Theme toggle event
+    toggleTheme.addEventListener("click", () => {
+      document.body.classList.toggle("light-mode");
+    });
+  </script>
+</body>
+</html>
