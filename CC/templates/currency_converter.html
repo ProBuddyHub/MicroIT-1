@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Currency Converter</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/currency_converter.css') }}">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Logo -->
+        <div class="logo">
+            <!-- SVG Logo -->
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="2" y1="12" x2="22" y2="12"></line>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+            </svg>
+        </div>
+
+        <!-- Title -->
+        <h1 class="title">
+            Currency Converter
+            <!-- SVG Question Mark Icon -->
+            <svg id="helpIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle"
+                style="vertical-align: middle; margin-left: 8px; cursor: pointer;" title="Need Help? Hover for more info.">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M9.09 9a3 3 0 1 1 5.82 1c0 2-3 3-3 3"></path>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+        </h1>
+
+        <!-- Tooltip -->
+        <div class="tooltip" id="tooltip">
+            Enter an amount and select currencies to convert in real-time using live exchange rates.
+        </div>
+
+        <!-- Input Section -->
+        <div class="input-section">
+            <!-- From Currency -->
+            <div class="input-group">
+                <label for="fromCurrency">From</label>
+                <select id="fromCurrency"></select>
+            </div>
+
+            <!-- Amount -->
+            <div class="input-group">
+                <label for="amount">Amount</label>
+                <input type="number" id="amount" placeholder="Enter amount" />
+            </div>
+
+            <!-- To Currency -->
+            <div class="input-group">
+                <label for="toCurrency">To</label>
+                <select id="toCurrency"></select>
+            </div>
+        </div>
+
+        <!-- Convert Button -->
+        <div class="button-container">
+            <button id="convertBtn"><i class="fas fa-exchange-alt"></i> Convert</button>
+            <button id="reverseBtn" title="Reverse Currencies">
+            <i class="fas fa-exchange-alt"></i> Reverse
+            </button>
+        </div>
+
+        <!-- Result -->
+        <div class="result">
+            <span id="resultText">Converted amount will appear here.</span>
+        </div>
+    </div>
+
+    <!-- Script -->
+    <script>
+        const helpIcon = document.getElementById("helpIcon");
+        const tooltip = document.getElementById("tooltip");
+
+        helpIcon.addEventListener("click", () => {
+            const isVisible = tooltip.style.display === "block";
+            tooltip.style.display = isVisible ? "none" : "block";
+        });
+
+        document.addEventListener("click", (e) => {
+            if (!helpIcon.contains(e.target) && !tooltip.contains(e.target)) {
+                tooltip.style.display = "none";
+            }
+        });
+    </script>
+
+    <script src="{{ url_for('static', filename='js/currency_converter.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", sans-serif;
+}
+
+/* Body Styling */
+body {
+    background-color: #101820;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Main Container */
+.container {
+    background-color: #1a1f2b;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
+    width: 90%;
+    max-width: 600px;
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Logo Styling */
+.logo {
+    margin-bottom: 10px;
+}
+
+.logo svg {
+    stroke: #f4c430;
+}
+
+/* Title Bar */
+.title {
+    font-size: 28px;
+    margin-bottom: 25px;
+    color: #f4c430;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+/* Question Mark Icon */
+.title svg.feather-help-circle {
+    width: 20px;
+    height: 20px;
+    stroke: #f4c430;
+    transition: stroke 0.3s ease;
+}
+
+.title svg.feather-help-circle:hover {
+    stroke: #ffffff;
+    cursor: pointer;
+}
+
+/* Input Section */
+.input-section {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.input-group {
+    flex: 1 1 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 120px;
+}
+
+.input-group label {
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #aaa;
+}
+
+.input-group select,
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    background-color: #2a2f3c;
+    color: white;
+    font-size: 16px;
+    outline: none;
+}
+
+.input-group input::placeholder {
+    color: #ccc;
+}
+
+/* Button */
+.button-container {
+    margin-bottom: 20px;
+}
+
+#convertBtn {
+    background-color: #f4c430;
+    color: #101820;
+    border: none;
+    padding: 12px 24px;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+#reverseBtn {
+    background-color: #f4c430;
+    color: #101820;
+    border: none;
+    padding: 12px 24px;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+#convertBtn:hover {
+    background-color: #d1a900;
+    transform: scale(1.05);
+}
+
+/* Result Bar */
+.result {
+    background-color: #2a2f3c;
+    padding: 15px;
+    border-radius: 6px;
+    font-size: 18px;
+    color: #f4f4f4;
+    min-height: 40px;
+    word-wrap: break-word;
+}
