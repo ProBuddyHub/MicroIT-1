@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rock-Paper-Scissors Game</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            text-align: center;
+            background: linear-gradient(to right, #2c3e50, #3498db);
+            color: white;
+            padding: 50px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .choices {
+            margin: 20px 0;
+        }
+
+        .choice-btn {
+            background-color: white;
+            color: #333;
+            font-size: 1.2em;
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .choice-btn:hover {
+            background-color: #f1c40f;
+            color: black;
+        }
+
+        .result {
+            margin-top: 30px;
+            font-size: 1.4em;
+            font-weight: bold;
+        }
+
+        .score {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+
+        .score span {
+            margin: 0 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Rock-Paper-Scissors</h1>
+
+    <div class="choices">
+        <button class="choice-btn" onclick="playGame('rock')">🪨 Rock</button>
+        <button class="choice-btn" onclick="playGame('paper')">📄 Paper</button>
+        <button class="choice-btn" onclick="playGame('scissors')">✂️ Scissors</button>
+    </div>
+
+    <div class="result" id="resultText">Make your move!</div>
+    <div class="score">
+        <span>👤 You: <strong id="userScore">0</strong></span>
+        <span>🤖 Computer: <strong id="compScore">0</strong></span>
+    </div>
+
+    <script>
+        const resultText = document.getElementById('resultText');
+        const userScoreElem = document.getElementById('userScore');
+        const compScoreElem = document.getElementById('compScore');
+
+        let userScore = 0;
+        let compScore = 0;
+
+        function getComputerChoice() {
+            const choices = ['rock', 'paper', 'scissors'];
+            return choices[Math.floor(Math.random() * choices.length)];
+        }
+
+        function playGame(userChoice) {
+            const compChoice = getComputerChoice();
+
+            if (userChoice === compChoice) {
+                resultText.textContent = `It's a draw! You both chose ${userChoice}.`;
+            } else if (
+                (userChoice === 'rock' && compChoice === 'scissors') ||
+                (userChoice === 'paper' && compChoice === 'rock') ||
+                (userChoice === 'scissors' && compChoice === 'paper')
+            ) {
+                userScore++;
+                resultText.textContent = `You win! ${userChoice} beats ${compChoice}.`;
+            } else {
+                compScore++;
+                resultText.textContent = `You lose! ${compChoice} beats ${userChoice}.`;
+            }
+
+            userScoreElem.textContent = userScore;
+            compScoreElem.textContent = compScore;
+        }
+    </script>
+</body>
+</html>
